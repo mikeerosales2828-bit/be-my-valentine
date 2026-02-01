@@ -14,30 +14,38 @@
       align-items: center;
       justify-content: center;
       margin: 0;
+      padding: 18px;
     }
 
     .container {
       background: white;
-      padding: 32px 36px;
+      padding: 28px 22px;
       border-radius: 22px;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
       text-align: center;
       max-width: 520px;
+      width: 100%;
+    }
+
+    /* IMPORTANT: prevent GIF/images from stealing taps on mobile */
+    img {
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+      display: block;
+      margin: 0 auto;
     }
 
     h1 {
-      font-size: 40px;
-      margin-bottom: 12px;
+      font-size: 38px;
+      margin: 10px 0 10px;
+      line-height: 1.1;
     }
 
     p {
       font-size: 18px;
-      margin-bottom: 18px;
-    }
-
-    img {
-      display: block;
-      margin: 0 auto;
+      margin: 0 0 16px;
+      opacity: 0.9;
     }
 
     .buttons {
@@ -54,6 +62,9 @@
       border: none;
       cursor: pointer;
       transition: transform 0.2s ease;
+      touch-action: manipulation; /* helps on iOS */
+      position: relative;
+      z-index: 5; /* keeps buttons above everything */
     }
 
     #yes {
@@ -69,11 +80,12 @@
       margin-top: 14px;
       font-size: 16px;
       opacity: 0.85;
+      min-height: 22px;
     }
 
     #memory {
       display: none;
-      margin-top: 22px;
+      margin-top: 18px;
       max-width: 100%;
       border-radius: 18px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
@@ -84,31 +96,28 @@
 <body>
   <div class="container">
 
-    <!-- Default capybara -->
     <img
       id="capybara"
       src="https://media.giphy.com/media/9d3LQ6TdV2Flo8ODTU/giphy.gif"
       alt="cute capybara"
-      style="width:160px; margin-bottom:12px;"
+      style="width:160px; margin-bottom:10px;"
     >
 
     <h1>💘 Will you be my Valentine?</h1>
     <p>I have a very important question for you…</p>
 
     <div class="buttons">
-      <button id="yes">Yes ❤️</button>
-      <button id="no">No 😕</button>
+      <button id="yes" type="button">Yes ❤️</button>
+      <button id="no" type="button">No 😕</button>
     </div>
 
     <div class="message" id="message"></div>
 
-    <!-- Hidden photo -->
     <img
       id="memory"
       src="us.jpg"
       alt="our photo"
     >
-
   </div>
 
   <script>
@@ -120,3 +129,45 @@
 
     const messages = [
       "Are you sure? 😳",
+      "Think again 🥺",
+      "The capybara is nervous…",
+      "This feels wrong 😭",
+      "Ok last chance 💔"
+    ];
+
+    let i = 0;
+
+    noBtn.addEventListener("click", () => {
+      message.textContent = messages[i % messages.length];
+      i++;
+      yesBtn.style.transform = `scale(${1 + i * 0.12})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      message.textContent = "YAYYY 💕 BEST DECISION EVER 🥹";
+
+      capybara.src = "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif";
+      memory.style.display = "block";
+
+      for (let j = 0; j < 30; j++) {
+        const emoji = document.createElement("div");
+        emoji.textContent = ["💖","🎉","💘","✨"][j % 4];
+        emoji.style.position = "fixed";
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.top = "-20px";
+        emoji.style.fontSize = (18 + Math.random() * 18) + "px";
+        emoji.style.transition = "transform 2s linear, opacity 2s";
+        emoji.style.zIndex = 9999;
+        document.body.appendChild(emoji);
+
+        requestAnimationFrame(() => {
+          emoji.style.transform = "translateY(110vh) rotate(720deg)";
+          emoji.style.opacity = "0";
+        });
+
+        setTimeout(() => emoji.remove(), 2000);
+      }
+    });
+  </script>
+</body>
+</html>
