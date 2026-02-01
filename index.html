@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine?</title>
+  <style>
+    body{font-family:system-ui;display:grid;place-items:center;min-height:100vh;background:#ffe6ee}
+    .card{background:white;padding:28px;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.12);text-align:center;max-width:520px}
+    h1{margin:0 0 10px;font-size:40px}
+    p{margin:0 0 18px;font-size:18px}
+    button{font-size:18px;padding:12px 18px;border-radius:12px;border:0;cursor:pointer}
+    #yes{background:#ff2d55;color:white}
+    #no{background:#e9e9ef;margin-left:10px}
+    .small{opacity:.7;font-size:14px;margin-top:14px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>💘 Will you be my Valentine?</h1>
+    <p>I made this on GitHub just to ask you 😭</p>
+    <div>
+      <button id="yes">Yes 🥰</button>
+      <button id="no">No 🙃</button>
+    </div>
+    <div class="small" id="msg"></div>
+  </div>
+
+  <script>
+    const msg = document.getElementById("msg");
+    const no = document.getElementById("no");
+    const yes = document.getElementById("yes");
+    const lines = [
+      "Are you sure? 😳",
+      "Like… 100% sure? 🥺",
+      "What if I say please? 🙏",
+      "I wrote HTML for you… 😭",
+      "Ok last chance… 💔"
+    ];
+    let i = 0;
+
+    yes.onclick = () => { msg.textContent = "YAYYY 😍 See you on Feb 14 💐"; confetti(); };
+    no.onclick = () => { msg.textContent = lines[i++ % lines.length]; moveNo(); };
+
+    function moveNo(){
+      const x = Math.random()*200 - 100;
+      const y = Math.random()*120 - 60;
+      no.style.transform = `translate(${x}px,${y}px)`;
+    }
+
+    function confetti(){
+      // tiny fake confetti w/ emoji
+      for(let k=0;k<30;k++){
+        const s=document.createElement("div");
+        s.textContent=["💖","✨","💘","🌹"][k%4];
+        s.style.position="fixed";
+        s.style.left=(Math.random()*100)+"vw";
+        s.style.top="-10px";
+        s.style.fontSize=(16+Math.random()*18)+"px";
+        s.style.transition="transform 2s linear, opacity 2s";
+        document.body.appendChild(s);
+        requestAnimationFrame(()=>{ s.style.transform=`translateY(110vh) rotate(720deg)`; s.style.opacity="0"; });
+        setTimeout(()=>s.remove(),2000);
+      }
+    }
+  </script>
+</body>
+</html>
