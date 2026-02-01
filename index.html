@@ -6,102 +6,77 @@
   <title>Will you be my Valentine?</title>
 
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #ffe6ee;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding: 18px;
+    body{
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#ffe6ee;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0;
+      padding:18px;
     }
-
-    .container {
-      background: white;
-      padding: 28px 22px;
-      border-radius: 22px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      max-width: 520px;
-      width: 100%;
+    .card{
+      background:#fff;
+      width:min(560px,100%);
+      border-radius:22px;
+      box-shadow:0 15px 40px rgba(0,0,0,.15);
+      padding:28px 22px;
+      text-align:center;
     }
-
-    /* IMPORTANT: prevent GIF/images from stealing taps on mobile */
-    img {
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-select: none;
-      display: block;
-      margin: 0 auto;
+    h1{font-size:38px; margin:10px 0 10px; line-height:1.1;}
+    p{font-size:18px; margin:0 0 14px; opacity:.9;}
+    .capy{
+      width:160px;
+      margin:0 auto 10px;
+      display:block;
+      pointer-events:none; /* prevents iOS tap weirdness */
+      user-select:none;
+      -webkit-user-select:none;
     }
-
-    h1 {
-      font-size: 38px;
-      margin: 10px 0 10px;
-      line-height: 1.1;
+    .buttons{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin-top:10px;
     }
-
-    p {
-      font-size: 18px;
-      margin: 0 0 16px;
-      opacity: 0.9;
+    button{
+      font-size:20px;
+      padding:12px 22px;
+      border-radius:14px;
+      border:none;
+      cursor:pointer;
+      transition:transform .2s ease;
+      touch-action:manipulation;
+      position:relative;
+      z-index:5;
     }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 10px;
+    #yes{background:#ff2d55; color:#fff;}
+    #no{background:#e9e9ef;}
+    .msg{
+      margin-top:14px;
+      font-size:16px;
+      opacity:.85;
+      min-height:22px;
     }
-
-    button {
-      font-size: 20px;
-      padding: 12px 22px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-      touch-action: manipulation; /* helps on iOS */
-      position: relative;
-      z-index: 5; /* keeps buttons above everything */
-    }
-
-    #yes {
-      background: #ff2d55;
-      color: white;
-    }
-
-    #no {
-      background: #e9e9ef;
-    }
-
-    .message {
-      margin-top: 14px;
-      font-size: 16px;
-      opacity: 0.85;
-      min-height: 22px;
-    }
-
-    #memory {
-      display: none;
-      margin-top: 18px;
-      max-width: 100%;
-      border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    #photo{
+      display:none;
+      margin-top:18px;
+      max-width:100%;
+      border-radius:18px;
+      box-shadow:0 10px 25px rgba(0,0,0,.25);
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-
+  <div class="card">
     <img
       id="capybara"
+      class="capy"
       src="https://media.giphy.com/media/9d3LQ6TdV2Flo8ODTU/giphy.gif"
-      alt="cute capybara"
-      style="width:160px; margin-bottom:10px;"
-    >
+      alt="capybara sticker"
+    />
 
     <h1>💘 Will you be my Valentine?</h1>
     <p>I have a very important question for you…</p>
@@ -111,61 +86,62 @@
       <button id="no" type="button">No 😕</button>
     </div>
 
-    <div class="message" id="message"></div>
+    <div class="msg" id="message"></div>
 
-    <img
-      id="memory"
-      src="us.jpg"
-      alt="our photo"
-    >
+    <!-- OPTIONAL: upload a photo to your repo named "us.jpg" to show it after Yes -->
+    <img id="photo" src="us.jpg" alt="our photo" />
   </div>
 
   <script>
     const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-    const message = document.getElementById("message");
-    const capybara = document.getElementById("capybara");
-    const memory = document.getElementById("memory");
+    const noBtn  = document.getElementById("no");
+    const msg    = document.getElementById("message");
+    const capy   = document.getElementById("capybara");
+    const photo  = document.getElementById("photo");
 
-    const messages = [
+    const noLines = [
       "Are you sure? 😳",
       "Think again 🥺",
       "The capybara is nervous…",
       "This feels wrong 😭",
       "Ok last chance 💔"
     ];
-
     let i = 0;
 
     noBtn.addEventListener("click", () => {
-      message.textContent = messages[i % messages.length];
+      msg.textContent = noLines[i % noLines.length];
       i++;
       yesBtn.style.transform = `scale(${1 + i * 0.12})`;
     });
 
     yesBtn.addEventListener("click", () => {
-      message.textContent = "YAYYY 💕 BEST DECISION EVER 🥹";
+      msg.textContent = "YAYYY 💕 BEST DECISION EVER 🥹";
 
-      capybara.src = "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif";
-      memory.style.display = "block";
+      // celebration capybara 🎉
+      capy.src = "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif";
 
+      // show photo if it exists (us.jpg)
+      photo.style.display = "block";
+      photo.onerror = () => { photo.style.display = "none"; }; // hide if you didn't upload it
+
+      // confetti
       for (let j = 0; j < 30; j++) {
-        const emoji = document.createElement("div");
-        emoji.textContent = ["💖","🎉","💘","✨"][j % 4];
-        emoji.style.position = "fixed";
-        emoji.style.left = Math.random() * 100 + "vw";
-        emoji.style.top = "-20px";
-        emoji.style.fontSize = (18 + Math.random() * 18) + "px";
-        emoji.style.transition = "transform 2s linear, opacity 2s";
-        emoji.style.zIndex = 9999;
-        document.body.appendChild(emoji);
+        const e = document.createElement("div");
+        e.textContent = ["💖","🎉","💘","✨"][j % 4];
+        e.style.position = "fixed";
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.top = "-20px";
+        e.style.fontSize = (18 + Math.random() * 18) + "px";
+        e.style.transition = "transform 2s linear, opacity 2s";
+        e.style.zIndex = 9999;
+        document.body.appendChild(e);
 
         requestAnimationFrame(() => {
-          emoji.style.transform = "translateY(110vh) rotate(720deg)";
-          emoji.style.opacity = "0";
+          e.style.transform = "translateY(110vh) rotate(720deg)";
+          e.style.opacity = "0";
         });
 
-        setTimeout(() => emoji.remove(), 2000);
+        setTimeout(() => e.remove(), 2000);
       }
     });
   </script>
