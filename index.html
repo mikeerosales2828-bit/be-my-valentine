@@ -1,21 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hi crust! will you be my Valentine? <3 </title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Will you be my Valentine?</title>
 
-  <!-- Link to your CSS file -->
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffe6ee;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 32px 36px;
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 520px;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 12px 22px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    #yes {
+      background: #ff2d55;
+      color: white;
+    }
+
+    #no {
+      background: #e9e9ef;
+    }
+
+    .message {
+      margin-top: 14px;
+      font-size: 16px;
+      opacity: 0.85;
+    }
+
+    #memory {
+      display: none;
+      margin-top: 22px;
+      max-width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+  </style>
 </head>
-<body>
 
+<body>
   <div class="container">
+
+    <!-- Default capybara -->
     <img
-  src="https://media.giphy.com/media/9d3LQ6TdV2Flo8ODTU/giphy.gif"
-  alt="cute capybara sticker"
-  style="width:160px; margin-bottom:12px;"
->
+      id="capybara"
+      src="https://media.giphy.com/media/9d3LQ6TdV2Flo8ODTU/giphy.gif"
+      alt="cute capybara"
+      style="width:160px; margin-bottom:12px;"
+    >
 
     <h1>💘 Will you be my Valentine?</h1>
     <p>I have a very important question for you…</p>
@@ -26,21 +101,22 @@
     </div>
 
     <div class="message" id="message"></div>
-  </div>
-  <!-- Link to your JS file -->
-  <img
-  id="memory"
-  src="us.jpg"
-  alt="our picture"
-  style="
-    display: none;
-    margin-top: 20px;
-    max-width: 100%;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  "
->
-  <script src="script.js"></script>
-</body>
-</html>
 
+    <!-- Hidden photo -->
+    <img
+      id="memory"
+      src="us.jpg"
+      alt="our photo"
+    >
+
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const message = document.getElementById("message");
+    const capybara = document.getElementById("capybara");
+    const memory = document.getElementById("memory");
+
+    const messages = [
+      "Are you sure? 😳",
